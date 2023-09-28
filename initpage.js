@@ -1,3 +1,6 @@
+	const __STORY__ = "js";
+	const __MENU__ =  1;
+	
 	let targetDiv = document.getElementById("main");
 	let statusLoading = document.getElementById("statusLoading");	
 	let bottomAds = document.getElementById("bottom-ads");
@@ -9,9 +12,11 @@
 		mainMenu.style.display = "block";			
 	}
 	
-	function isDesktop(){	
-		//if(  window.innerWidth >=768 || WURFL.form_factor === "Desktop") {		
-		if(  window.innerWidth >=768 ) {	
+	function isDesktop(){			
+		let test = window.location.href.includes("localhost") ? window.innerWidth >=768 
+		: WURFL.form_factor === "Desktop";
+
+		if( test ) {	
 			return true;				
 		} 
 		return false;		
@@ -22,23 +27,18 @@
 					mainMenu.style.display = "none";	
 				}				
 				event.preventDefault();	
-				let link = event.target
-				let file = link.href;		
+				let link = event.target				
 				includeHTML(link);				
 	}
-    function initMenuEvent(func){
+    function initMenuEvent(func, url){
 		let allLink = document.getElementsByClassName("link-chap");
 		for(const link of allLink) {
 			link.addEventListener('click', clickMenu);		
 			link.addEventListener('contextmenu', function(event) {
 				event.preventDefault();			
-			});			
-			link.convertToHTML = func;			
-			console.log(window.location);
-			link.href = `http://localhost/javascript/examples_book/${link.getAttribute('content')}`;	
-			console.log(link.href);
-			//window.location.pathname 
-			//link.href = `${window.location.href}${link.getAttribute('content')}`;			
+			});						
+			link.convertToHTML = func;		
+			link.content = `${url}/${link.getAttribute('content')}`;		
 		}			
 	}
 	
@@ -90,7 +90,7 @@
 		//let fileLink = tmp[tmp.length-1];
 		//let url = `https://raw.githubusercontent.com/adminho/javascript/master/examples_book/${fileLink}`;		
 		//alert(url);
-		let url = link.href;
+		let url = link.content;
 		fetch(url, options)
 		.then( res => res.text())		
 		.then( text => { 
@@ -114,26 +114,30 @@
 		includeHTML(document.getElementsByClassName("link-chap")[index]); // select default link
 	}
 	
-	async function showJavaScriptBookCode(){		
-		await bildHTML(mainMenu, "left_menu.html");			
-		await bildHTML(bottomAds, "ads_bottom.html");	
-		await bildHTML(rightAds, "ads_right.html");			
-		initMenuEvent(genHTMLfromMDFile);
-		selectMenu(1);
-	}
-	
-	async function showPythonIpynb(){	
-		await bildHTML(mainMenu, "left_menu_ipynb.html");	
-		await bildHTML(bottomAds, "ads_bottom_ipynb.html");
-		await bildHTML(rightAds, "ads_right.html");	
-		initMenuEvent(genHTMLfromIpynb);		
-		selectMenu(0);
-	}
-	
-	window.onload = async function() {
-		showJavaScriptBookCode();
-	}
-	
+	async function renderPage(story, menu){		
+		let description="";
+		switch(story) {
+			case "js":
+				await bildHTML(mainMenu, "left_menu.html");			
+				await bildHTML(bottomAds, "ads_bottom.html");	
+				await bildHTML(rightAds, "ads_right.html");			
+				initMenuEvent(genHTMLfromMDFile, "https://raw.githubusercontent.com/adminho/javascript/master/examples_book/");		
+				description ="เนื้อหาเกี่ยวกับ JavaScript ครบถ้วนอัดแน่น";
+				break;
+			case "py":		
+				await bildHTML(mainMenu, "left_menu_ipynb.html");	
+				await bildHTML(bottomAds, "ads_bottom_ipynb.html");
+				await bildHTML(rightAds, "ads_right.html");	
+				initMenuEvent(genHTMLfromIpynb, "https://raw.githubusercontent.com/adminho/machine-learning/master/ipynb/");		
+				description ="เนื้อหาเกี่ยวกับ Python ครบถ้วนอัดแน่น";
+				break;	
+			default:
+				throw new Error("Can't reder page.");
+		}	
+		document.getElementsByTagName('meta')["description"].content=description;
+		selectMenu(menu);		
+	}	
+
 	window.resize = function(){				
-		!isDesktop?mainMenu.style.display = "block":mainMenu.style.display = "none";
+		!isDesktop()?mainMenu.style.display = "block":mainMenu.style.display = "none";
 	}

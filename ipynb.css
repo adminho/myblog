@@ -6,13 +6,13 @@
 .display-result-ipynb {
    width: 100%; 
    /*background-color: #7B68EE;*/
-   background-color: #e9f7e0;
+   /*background-color: #e9f7e0;*/   
    color: black;
    text-align: left;
    font-size: 1rem;
    margin-top: 2px;
    margin-bottom: 20px;
-   border: 1px #F23F2F;
+   border: solid 1px #e9f7e0;;
 }
 
 br {

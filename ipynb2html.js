@@ -31,8 +31,7 @@
 				newLine += `<a href='${targetStr}' target='_blank'>${targetStr}</a> `;
 			} else {
 				newLine += `${targetStr} `;
-			}			
-			
+			}						
 		});
 		return newLine.slice(0,-1);
 	}
@@ -89,12 +88,23 @@
 				if( cell.outputs.length > 0){
 					let output = cell.outputs[0];		
 					let content = "";					
-					if( output.output_type == "execute_result"){					
-						content = output.data["text/plain"].join("");	
+					if( output.output_type == "execute_result" || output.output_type == "display_data"){			
+						for (const key in output.data) {						
+							if(key == "text/plain") {
+								let txt = output.data["text/plain"].join("");
+								if(txt.includes("<Figure") || txt.includes("<IPython.core") ){
+									continue;
+								}										
+								content += decodeHtml(txt);								
+							} else if (key == "image/png") {
+								content += `<img src='data:image/png;base64,${output.data["image/png"]}'>`;									
+							}
+						}					
+							
 					} else if ( output.output_type == "stream"){
 						content = output["text"].join("");
-					}					
-					content = decodeHtml(content);
+						content = decodeHtml(content);
+					} 										
 					allLines += `<span>Output (Colab/Jupyter Notebook/JupyterLab): </span><div id="displayResult${cell.metadata.id}" class="display-result-ipynb">${content}</div>`;
 										
 				}				
