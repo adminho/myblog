@@ -188,6 +188,10 @@ async function runCodeBtn(targetCount) {
 		__popupWindow__ = window.open("", "newWindow", "width=500,height=300");		
 		__popupWindow__.document.write(codeTxt);
 		
+	} else if( codeTxt.includes("<html>")>0 && btn.value=="Open HTML (New Tab)" ) {			
+		myform.action="displayhtml.php"
+		myform.submit();	
+		
 	} else if( btn.value=="Import" ) {	
 		let res = await importModule(codeTxt);
 		if(__popupWindow__){

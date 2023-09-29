@@ -1,5 +1,5 @@
 function isBeginCode(line){
-	if(line.startsWith("```js") || line.startsWith("```html") 
+	if(line.startsWith("```js") || line.startsWith("```html")  || line.startsWith("```tab.html") 
 		|| line.startsWith("```module") || line.startsWith("```run.module")
 	    || line.startsWith("```notrun")) {
 		return true;
@@ -26,6 +26,8 @@ allLineArray.forEach( (line) =>  {
 		btnValue = "Run";
 	  } else if(line.startsWith("```html")) {
 		  btnValue = "Open HTML";
+	  } else if(line.startsWith("```tab.html")) {	  
+		  btnValue = "Open HTML (New Tab)";	 
 	  } else if(line.startsWith("```module")){
 		  btnValue = "Import";					  
 	  } else if(line.startsWith("```run.module")) {

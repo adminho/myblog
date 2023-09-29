@@ -30,15 +30,22 @@
 				let link = event.target				
 				includeHTML(link);				
 	}
-    function initMenuEvent(func, url){
+    function initMenuEvent(func){
 		let allLink = document.getElementsByClassName("link-chap");
 		for(const link of allLink) {
 			link.addEventListener('click', clickMenu);		
 			link.addEventListener('contextmenu', function(event) {
 				event.preventDefault();			
 			});						
-			link.convertToHTML = func;		
-			link.content = `${url}/${link.getAttribute('content')}`;		
+			link.convertToHTML = func;	
+			let content = link.getAttribute('content');
+			let url="";
+			if( content.endsWith(".md")){
+				url = window.location.href.includes("localhost")?"http://localhost/javascript/examples_book/":"";
+			} else if ( content.endsWith(".ipynb")){
+				url = window.location.href.includes("localhost")?"https://raw.githubusercontent.com/adminho/machine-learning/master/ipynb/":"";
+			}
+			link.content = `${url}${content}`;		
 		}			
 	}
 	
@@ -121,14 +128,14 @@
 				await bildHTML(mainMenu, "left_menu.html");			
 				await bildHTML(bottomAds, "ads_bottom.html");	
 				await bildHTML(rightAds, "ads_right.html");			
-				initMenuEvent(genHTMLfromMDFile, "https://raw.githubusercontent.com/adminho/javascript/master/examples_book/");		
+				initMenuEvent(genHTMLfromMDFile);		
 				description ="เนื้อหาเกี่ยวกับ JavaScript ครบถ้วนอัดแน่น";
 				break;
 			case "py":		
 				await bildHTML(mainMenu, "left_menu_ipynb.html");	
 				await bildHTML(bottomAds, "ads_bottom_ipynb.html");
 				await bildHTML(rightAds, "ads_right.html");	
-				initMenuEvent(genHTMLfromIpynb, "https://raw.githubusercontent.com/adminho/machine-learning/master/ipynb/");		
+				initMenuEvent(genHTMLfromIpynb);		
 				description ="เนื้อหาเกี่ยวกับ Python ครบถ้วนอัดแน่น";
 				break;	
 			default:
