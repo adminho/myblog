@@ -161,34 +161,33 @@ function clearDisplay(targetCount) {
 	}
 }
 
-//async function saveModule(codeText) {
-//	fetch('test_modulejs/save_module.php', {
-//		method: "POST",
-//        headers: {
-//			'Accept': 'application/json, text/plain, */*',
-//			'Content-Type': 'application/json'
-//		},
-//		body: JSON.stringify({
-//			code: codeText
-//		})		
-//	})
-//	.then( response => response.text())
-//	.then( text => alert(text) )
-//	.catch(error => console.error('Error:', error)); 
-//}
+async function saveModule(codeText) {
+	fetch('test_modulejs/save_module.php', {
+		method: "POST",
+        headers: {
+			'Accept': 'application/json, text/plain, */*',
+			'Content-Type': 'text/html; charset=utf-8',
+		},
+		body: JSON.stringify({
+			code: codeText
+		})		
+	})
+	.then( response => response.text())
+	.then( text => alert(text) )
+	.catch(error => console.error('Error:', error)); 
+}
 
 function runCodeBtn(targetCount) {						
-	clearDisplay(targetCount);
-		
+	clearDisplay(targetCount);		
 	__resultAreaId__ = `#displayResult${targetCount}`;						
 	let textCodeArea = document.querySelector(`#codeArea${targetCount}`);
 	let btn = document.querySelector(`#btn${targetCount}`);
 	let myform = document.querySelector(`#form${targetCount}`);
 	let codeTxt = textCodeArea.value;										
 	
-	if( codeTxt.includes("<html>")>0 && btn.value=="Open HTML" ) {		
-		myform.action="displayhtml.php"
-		myform.submit();		
+	if( codeTxt.includes("<html>")>0 && btn.value=="Open HTML" ) {			
+		let newWindow = window.open("", "newWindow", "width=300,height=400");
+		newWindow.document.write(codeTxt);
 		
 	} else if( btn.value=="Import" ) {
 		myform.action="test_modulejs/importmodule.php"
@@ -199,8 +198,7 @@ function runCodeBtn(targetCount) {
 		myform.action="test_modulejs/runmodule.php"
 		myform.submit();	
 		
-	} else {
-				
+	} else {				
 		try {
 			console.log("@html<font color='lightgreen'>ผลการรัน:</font>");	
 			codeTxt = codeTxt.replaceAll(/-false/g, "'@negzero'"); // fix bugs ถ้าเป็นเลข -false ต้องแสดง -0 เลยต้องแทนด้วย '@negzero'					
