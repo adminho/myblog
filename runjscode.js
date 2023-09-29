@@ -172,7 +172,7 @@ async function importModule(codeText) {
 	.then( text => text )
 	.catch(error => console.error('Error:', error)); 
 }
-
+let __popupWindow__ = undefined;
 async function runCodeBtn(targetCount) {						
 	clearDisplay(targetCount);		
 	__resultAreaId__ = `#displayResult${targetCount}`;						
@@ -182,13 +182,19 @@ async function runCodeBtn(targetCount) {
 	let codeTxt = textCodeArea.value;										
 	
 	if( codeTxt.includes("<html>")>0 && btn.value=="Open HTML" ) {			
-		let popupWindow = window.open("", "newWindow", "width=500,height=300");
-		popupWindow.document.write(codeTxt);
+		if(__popupWindow__){
+			__popupWindow__.close();
+		}
+		__popupWindow__ = window.open("", "newWindow", "width=500,height=300");		
+		__popupWindow__.document.write(codeTxt);
 		
 	} else if( btn.value=="Import" ) {	
 		let res = await importModule(codeTxt);
-		let popupWindow = window.open("", "newWindow", "width=500,height=300");
-		popupWindow.document.write(res);
+		if(__popupWindow__){
+			__popupWindow__.close();
+		}
+		__popupWindow__ = window.open("", "newWindow", "width=500,height=300");		
+		__popupWindow__.document.write(res);
 		
 	} else if( btn.value.startsWith("Run New Tab") ) {		
 		myform.action="test_modulejs/runmodule.php"
