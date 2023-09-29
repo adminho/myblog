@@ -161,23 +161,19 @@ function clearDisplay(targetCount) {
 	}
 }
 
-async function saveModule(codeText) {
-	fetch('test_modulejs/save_module.php', {
+async function importModule(codeText) {
+	return fetch('test_modulejs/importmodule.php', {
 		method: "POST",
-        headers: {
-			'Accept': 'application/json, text/plain, */*',
-			'Content-Type': 'text/html; charset=utf-8',
-		},
-		body: JSON.stringify({
-			code: codeText
-		})		
+		mode: "no-cors",
+        headers: { "Content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+		body:`code=${codeText}`,
 	})
 	.then( response => response.text())
-	.then( text => alert(text) )
+	.then( text => text )
 	.catch(error => console.error('Error:', error)); 
 }
 
-function runCodeBtn(targetCount) {						
+async function runCodeBtn(targetCount) {						
 	clearDisplay(targetCount);		
 	__resultAreaId__ = `#displayResult${targetCount}`;						
 	let textCodeArea = document.querySelector(`#codeArea${targetCount}`);
@@ -186,13 +182,13 @@ function runCodeBtn(targetCount) {
 	let codeTxt = textCodeArea.value;										
 	
 	if( codeTxt.includes("<html>")>0 && btn.value=="Open HTML" ) {			
-		let newWindow = window.open("", "newWindow", "width=300,height=400");
-		newWindow.document.write(codeTxt);
+		let popupWindow = window.open("", "newWindow", "width=500,height=300");
+		popupWindow.document.write(codeTxt);
 		
-	} else if( btn.value=="Import" ) {
-		myform.action="test_modulejs/importmodule.php"
-		myform.submit();				
-		//saveModule(codeTxt);
+	} else if( btn.value=="Import" ) {	
+		let res = await importModule(codeTxt);
+		let popupWindow = window.open("", "newWindow", "width=500,height=300");
+		popupWindow.document.write(res);
 		
 	} else if( btn.value.startsWith("Run New Tab") ) {		
 		myform.action="test_modulejs/runmodule.php"
