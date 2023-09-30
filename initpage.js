@@ -122,24 +122,22 @@
 	}
 	
 	async function renderPage(story, menu){		
+		await bildHTML(mainMenu, `left_menu_${story}.html`);			
+		await bildHTML(bottomAds, `ads_bottom_${story}.html`);	
+		await bildHTML(rightAds, `ads_right_${story}.html`);	
+				
 		let description="";
 		switch(story) {
-			case "js":
-				await bildHTML(mainMenu, "left_menu.html");			
-				await bildHTML(bottomAds, "ads_bottom.html");	
-				await bildHTML(rightAds, "ads_right.html");			
+			case "js":						
 				initMenuEvent(genHTMLfromMDFile);		
 				description ="เนื้อหาเกี่ยวกับ JavaScript ครบถ้วนอัดแน่น";
 				break;
-			case "py":		
-				await bildHTML(mainMenu, "left_menu_ipynb.html");	
-				await bildHTML(bottomAds, "ads_bottom_ipynb.html");
-				await bildHTML(rightAds, "ads_right.html");	
+			case "py":			
 				initMenuEvent(genHTMLfromIpynb);		
 				description ="เนื้อหาเกี่ยวกับ Python ครบถ้วนอัดแน่น";
 				break;	
 			default:
-				throw new Error("Can't reder page.");
+				throw new Error("Can't reder a page.");
 		}	
 		document.getElementsByTagName('meta')["description"].content=description;
 		selectMenu(menu);		

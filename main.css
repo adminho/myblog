@@ -148,7 +148,7 @@ a:active {
 
 .rotate {
 	animation: animName 2s linear infinite;	
-	opacity: 10;
+	opacity: 0.3;
 	width:30%;
 	position: fixed; 
 	left:33%;
