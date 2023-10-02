@@ -37,14 +37,17 @@
 				event.preventDefault();			
 			});						
 			link.convertToHTML = func;	
-			let content = link.getAttribute('content');
-			let url="";
-			if( content.endsWith(".md")){
-				url = window.location.href.includes("localhost")?"http://localhost/javascript/examples_book/":"";
-			} else if ( content.endsWith(".ipynb")){
-				url = window.location.href.includes("localhost")?"https://raw.githubusercontent.com/adminho/machine-learning/master/ipynb/":"";
-			}
-			link.content = `${url}${content}`;		
+			link.content  = link.getAttribute('content');			
+			
+			if(!link.content.startsWith("http")){// for test only				
+				let url="";
+				if( link.content.endsWith(".md")){
+					url = window.location.href.includes("localhost")?"http://localhost/javascript/examples_book/":"";
+				} else if ( content.endsWith(".ipynb")){
+					url = window.location.href.includes("localhost")?"http://localhost/javascript/machine-learning/ipynb":"";
+				}
+				link.content =  `${url}${link.content}`;	
+			}				
 		}			
 	}
 	
