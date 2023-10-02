@@ -172,6 +172,7 @@ async function importModule(codeText) {
 	.then( text => text )
 	.catch(error => console.error('Error:', error)); 
 }
+
 let __popupWindow__ = undefined;
 async function runCodeBtn(targetCount) {						
 	clearDisplay(targetCount);		
@@ -193,12 +194,8 @@ async function runCodeBtn(targetCount) {
 		myform.submit();	
 		
 	} else if( btn.value=="Import" ) {	
-		let res = await importModule(codeTxt);
-		if(__popupWindow__){
-			__popupWindow__.close();
-		}
-		__popupWindow__ = window.open("", "newWindow", "width=500,height=300");		
-		__popupWindow__.document.write(res);
+		let res = await importModule(codeTxt);		
+		console.log(`@html${res}`);		
 		
 	} else if( btn.value.startsWith("Run New Tab") ) {		
 		myform.action="test_modulejs/runmodule.php"

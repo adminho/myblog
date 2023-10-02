@@ -13,22 +13,21 @@
 	}
 	
 	function isDesktop(){			
-		let test = window.location.href.includes("localhost") ? window.innerWidth >=768 
-		: WURFL.form_factor === "Desktop";
-
-		if( test ) {	
+		//if(  window.innerWidth >=768 || WURFL.form_factor === "Desktop" ) {	
+		
+		if(  window.innerWidth >=768 || (!window.location.href.includes("localhost") && WURFL.form_factor === "Desktop" )) {	
 			return true;				
 		} 
 		return false;		
 	}
 
 	function clickMenu(event) {		
-				if( !isDesktop()) {					
-					mainMenu.style.display = "none";	
-				}				
-				event.preventDefault();	
-				let link = event.target				
-				includeHTML(link);				
+		if( !isDesktop()) {					
+			mainMenu.style.display = "none";	
+		}				
+		event.preventDefault();	
+		let link = event.target				
+		includeHTML(link);				
 	}
     function initMenuEvent(func){
 		let allLink = document.getElementsByClassName("link-chap");
@@ -129,17 +128,14 @@
 		let description="";
 		switch(story) {
 			case "js":						
-				initMenuEvent(genHTMLfromMDFile);		
-				description ="เนื้อหาเกี่ยวกับ JavaScript ครบถ้วนอัดแน่น";
+				initMenuEvent(genHTMLfromMDFile);
 				break;
 			case "py":			
-				initMenuEvent(genHTMLfromIpynb);		
-				description ="เนื้อหาเกี่ยวกับ Python ครบถ้วนอัดแน่น";
+				initMenuEvent(genHTMLfromIpynb);	
 				break;	
 			default:
 				throw new Error("Can't reder a page.");
 		}	
-		document.getElementsByTagName('meta')["description"].content=description;
 		selectMenu(menu);		
 	}	
 

@@ -7,8 +7,10 @@ if( !empty($id) ){
 	$story = "";
 	if($id === "756") {
 		$story = "js";
+		$description ="เนื้อหาเกี่ยวกับ JavaScript ครบถ้วนอัดแน่น";				
 	} else if($id === "982") {
 		$story = "py";
+		$description ="เนื้อหาเกี่ยวกับ Python ครบถ้วนอัดแน่น";
 	} else {
 		echo "Error 404";
 		exit();
@@ -17,9 +19,13 @@ if( !empty($id) ){
 	if( empty($no) || $no<1) {
 		$no = 1;
 	}
-
+	
+	$version = rand(10,100);
+	
 	$content = file_get_contents("main.html");
 	if($content>0){
+		$content = str_replace("__DESCRIPTION__", $description, $content);
+		$content = str_replace("__VERSION__", $version, $content);		
 		$content = str_replace("__STORY__", "'$story'", $content);
 		$content = str_replace("__MENU__", $no-1, $content);
 		echo $content;

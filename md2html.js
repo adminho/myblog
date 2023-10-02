@@ -42,8 +42,8 @@ allLineArray.forEach( (line) =>  {
 	  const rows = lineCodes.split('\n').length;
 	  	  
 	  let runBtnHTML = `<input class="run-btn" type="submit" id="btn${count}" value="${btnValue}" onclick="runCodeBtn(${count})">`
-	  let clearBtnHTML = `<input class="run-btn" type="submit" value="Clear" onclick="clearDisplay(${count})">`;
-	  if ( btnValue == "Import" || btnValue == "Run New Tab (Support Module)" ){
+	  let clearBtnHTML = `<input class="run-btn" type="submit" value="Clear Output" onclick="clearDisplay(${count})">`;
+	  if ( btnValue.startsWith("Open HTML") || btnValue == "Run New Tab (Support Module)" ){
 		   clearBtnHTML ="";
 	  } else if (btnValue == "Not run"){
 		  runBtnHTML = "";
