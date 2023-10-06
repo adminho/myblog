@@ -9,7 +9,7 @@ if( !empty($id) ){
 		$story = "js";
 		$description ="เนื้อหาเกี่ยวกับ JavaScript ครบถ้วนอัดแน่น";				
 	} else if($id === "982") {
-		$story = "py";
+		$story = "ipynb";
 		$description ="เนื้อหาเกี่ยวกับ Python ครบถ้วนอัดแน่น";
 	} else {
 		echo "Error 404";
@@ -52,9 +52,8 @@ if( !empty($id) ){
 	<div id="right-ads" class="ads"></div>	
 	<div id="bottom-ads" class="sale" style="display:none"></div>	
 	
-	<div id="btn-menu" class="btn-menu">
-		<img src="img/list.png" width="30px">
-	</div>
+	<div id="btn-menu" class="btn-menu"><canvas id="list-canvas" width="30" height="30"></canvas></div>
+	<div id="btn-menu-close" class="btn-menu-close"><span>Close</span></div>
 	<div id="main-menu" class="main-menu"></div>		
 	<div class="footer"><strong>แนะนำเปิดบนคอมพิวเตอร์ตั้งโต๊ะ หรือโน๊ตบุค </strong></div>
 	

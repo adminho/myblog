@@ -7,28 +7,33 @@
 	let rightAds = document.getElementById("right-ads"); 
 	let headlineDiv = document.getElementById("headline");
 	let mainMenu = document.getElementById("main-menu");	
-		
-	document.getElementById("btn-menu").onclick= function() {		
-		mainMenu.style.display = "block";			
-	}
+	let closeBtn = document.getElementById("btn-menu-close");		
 	
 	function isDesktop(){			
-		//if(  window.innerWidth >=768 || WURFL.form_factor === "Desktop" ) {	
-		
+		//if(  window.innerWidth >=768 || WURFL.form_factor === "Desktop" ) {			
 		if(  window.innerWidth >=768 || (!window.location.href.includes("localhost") && WURFL.form_factor === "Desktop" )) {	
 			return true;				
 		} 
 		return false;		
 	}
 
-	function clickMenu(event) {		
-		if( !isDesktop()) {					
-			mainMenu.style.display = "none";	
-		}				
+    function showMenu(){
+		mainMenu.style.display = "block";
+		isDesktop() ? closeBtn.style.display = "none" : closeBtn.style.display = "block";		
+	}
+	
+	function closeMenu(){
+		mainMenu.style.display = "none";	
+		closeBtn.style.display = "none";	
+	}
+	
+	function clickMenu(event) {	
+		isDesktop() ? showMenu() : closeMenu();		
 		event.preventDefault();	
 		let link = event.target				
 		includeHTML(link);				
 	}
+	
     function initMenuEvent(func){
 		let allLink = document.getElementsByClassName("link-chap");
 		for(const link of allLink) {
@@ -92,13 +97,8 @@
 
 		let options =  {		
 			cache: "no-cache",				
-		};
-		
-		//let currentLocation =  window.location.protocol + "//" + window.location.host + "/" + window.location.pathname;
-		//let tmp = link.href.split('/');
-		//let fileLink = tmp[tmp.length-1];
-		//let url = `https://raw.githubusercontent.com/adminho/javascript/master/examples_book/${fileLink}`;		
-		//alert(url);
+		};		
+
 		let url = link.content;
 		fetch(url, options)
 		.then( res => res.text())		
@@ -123,25 +123,40 @@
 		includeHTML(document.getElementsByClassName("link-chap")[index]); // select default link
 	}
 	
+	function drawListImgMenu() {
+		const canvas = document.getElementById("list-canvas");
+		const ctx = canvas.getContext("2d");
+		ctx.fillStyle = "#DCDCDC";
+		ctx.fillRect(0,5,30,5);
+		ctx.fillRect(0,13,30,5);
+		ctx.fillRect(0,21,30,5);
+	}
+
 	async function renderPage(story, menu){		
 		await bildHTML(mainMenu, `left_menu_${story}.html`);			
 		await bildHTML(bottomAds, `ads_bottom_${story}.html`);	
-		await bildHTML(rightAds, `ads_right_${story}.html`);	
-				
-		let description="";
+		await bildHTML(rightAds, `ads_right_${story}.html`);					
+		
 		switch(story) {
 			case "js":						
 				initMenuEvent(genHTMLfromMDFile);
 				break;
-			case "py":			
+			case "ipynb":			
 				initMenuEvent(genHTMLfromIpynb);	
 				break;	
 			default:
 				throw new Error("Can't reder a page.");
 		}	
 		selectMenu(menu);		
+		
+		drawListImgMenu();
+		
+		document.getElementById("btn-menu").onclick= showMenu;
+		document.getElementById("btn-menu-close").onclick = closeMenu;
+		
+		window.onresize = function(){				
+			isDesktop() ? showMenu() : closeMenu();	
+		}
 	}	
 
-	window.resize = function(){				
-		!isDesktop()?mainMenu.style.display = "block":mainMenu.style.display = "none";
-	}
+	

@@ -101,21 +101,23 @@ a:active {
 	text-align: center;		
 }
 
-.btn-menu-right {
+.btn-menu-close {
 	position: fixed;
-    right: 0;
-    top: 0;
+    right: 20;
+    top: 55;
 	border: 1px solid;
 	border-color: #5A8A1A;
-	border-radius: 15px;
+	border-radius: 10px;
 	background: #558415;	    	
-	padding: 0.5rem 1.0rem;		
+	padding: 0.3rem 1.0rem 0.4rem 1.0rem;		
 	cursor: pointer;	
 	z-index: 80; 	
 	text-align: center;		
+	color: white;		
+	display:none;
 }
 
-.main-menu{  
+.main-menu {  
   position: fixed;
   left: 0;
   top: 40;
@@ -194,23 +196,13 @@ a:active {
 	}
 		
 	.headline {
-		/*font-size: 1.5em;*/
-		/*text-align: right;*/
 		display: none;
-	}
-	
-	/*.btn-menu {
-		display: block;
-	}*/
+	}	
+
 	.main-menu {
 		display: none;	
 		width: 100%;
-	}
-	/*
-	.group-menu:hover  .main-menu {
-		display: block;
-		margin-top: 10px;
-	}*/
+	}	
 }
 
 @media print { body { display:none } }
