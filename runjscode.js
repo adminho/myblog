@@ -38,7 +38,9 @@ function toString(data) {
 				
 		if("index" in data) str = str + `index: ${toString(data.index)}, `;
 		if("input" in data) str = str + `input: ${toString(data.input)}, `;
-		if("groups" in data) str = str + `groups: ${toString(data.groups)}, `;					
+		if("groups" in data) str = str + `groups: ${toString(data.groups)}, `;		
+		if("indices" in data) str = str + `indices: ${toString(data.indices)}, `;		
+		
 		return (str.length >2) ? str.slice(0, -2) + ' ]': '[]';	
 	} else if( data instanceof AggregateError){
 		str = "";
@@ -64,7 +66,7 @@ function toString(data) {
 			let arraString = data.toString().replaceAll(/\,/g, ", ");				
 			return `${stringTag}(${data.length}) [ ${arraString} ]`;
 				
-		} else if( data.toString().includes("Arguments")){						
+		} else if( data.toString && data.toString().includes("Arguments")){						
 			//let str = `Arguments(${data.length}) { `	
 			let strBegin = "[Arguments] { ";
 			let str = strBegin;	
@@ -173,6 +175,14 @@ async function importModule(codeText) {
 	.catch(error => console.error('Error:', error)); 
 }
 
+function filterQuote(str){
+	str = str.replaceAll(/“/g,'"');
+	str = str.replaceAll(/”/g,'"');
+	str = str.replaceAll(/‘/g,"'");
+	str = str.replaceAll(/’/g,"'"); 
+	return str;
+}
+
 let __popupWindow__ = undefined;
 async function runCodeBtn(targetCount) {						
 	clearDisplay(targetCount);		
@@ -209,6 +219,7 @@ async function runCodeBtn(targetCount) {
 			//fix bugs ถ้าเป็นเลข -0 ต้องแสดง -0 เลยต้องแทนด้วย '@negzero' 
 			// ทั้งนี้ยังแก้ปัญหาเช่น -0.56 ไม่ได้เลยต้องค้นหา -0, แทน เฉพาะตัวอย่างบทที่ 2	แต่ก็จะเกิดปัญหาบทที่ 15 ในตัวอย่าง array = [-0 , NaN, 1];								
 			codeTxt = codeTxt.replaceAll(/-0,/g, "'@negzero',"); 
+			codeTxt = filterQuote(codeTxt);
 			arguments = "@not_use_Arguments"; // fixbugs ในบทที่ 10 เรื่อง arguments ในฟังก์ชั่นลูกศร				
 			eval(codeTxt);						
 		} catch (e){

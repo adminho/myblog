@@ -150,11 +150,12 @@ a:active {
 	animation: animName 2s linear infinite;	
 	opacity: 0.3;
 	width:30%;
-	position: fixed; 
-	left:33%;
-	top:20%;
+	position: fixed; 	
 	z-index: 100;
 	display: none;
+	left:30%;
+	top:30%;
+	transform: translate(-50%, -50%);
 }
 
 @keyframes animName {

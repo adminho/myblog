@@ -42,9 +42,9 @@
 			if(!link.content.startsWith("http")){// for test only				
 				let url="";
 				if( link.content.endsWith(".md")){
-					url = window.location.href.includes("localhost")?"http://localhost/javascript/examples_book/":"";
-				} else if ( content.endsWith(".ipynb")){
-					url = window.location.href.includes("localhost")?"http://localhost/javascript/machine-learning/ipynb":"";
+					url = window.location.href.includes("localhost")?"http://localhost/javascript/examples_book/":"https://raw.githubusercontent.com/adminho/javascript/master/examples_book/";
+				} else if ( link.content.endsWith(".ipynb")){
+					url = window.location.href.includes("localhost")?"http://localhost/machine-learning/ipynb/":"https://raw.githubusercontent.com/adminho/machine-learning/master/ipynb/";
 				}
 				link.content =  `${url}${link.content}`;	
 			}				
