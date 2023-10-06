@@ -51,11 +51,17 @@ if( !empty($id) ){
 	<div id="main" class="main"></div>
 	<div id="right-ads" class="ads"></div>	
 	<div id="bottom-ads" class="sale" style="display:none"></div>	
-	
+	<div id="ads-blur" class="ads-blur">
+		<div id="ads-center-div" class="ads-center">
+			<span id="ads-close"><font color="blue" style="cursor:pointer; font-weight: bold">[Close]&nbsp;&nbsp;&nbsp;&nbsp;</font></span>
+			<div id="ads-center"></div>
+		</div>		
+	</div>
 	<div id="btn-menu" class="btn-menu"><canvas id="list-canvas" width="30" height="30"></canvas></div>
 	<div id="btn-menu-close" class="btn-menu-close"><span>Close</span></div>
-	<div id="main-menu" class="main-menu"></div>		
+	<div id="main-menu" class="main-menu"></div>	
 	<div class="footer"><strong>แนะนำเปิดบนคอมพิวเตอร์ตั้งโต๊ะ หรือโน๊ตบุค </strong></div>
+	
 	
 	<script src="util.js?v=<?php echo $version;?>"></script>
 	<script src="runjscode.js?v=<?php echo $version;?>"></script>	

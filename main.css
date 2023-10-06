@@ -29,8 +29,30 @@ body {
   z-index: 15;
 }
 
-.img-ads {
-	width: 200;	
+.ads-blur {
+	position: fixed;
+	right: 0;	
+    left: 0;
+	top: 0;
+    bottom: 0;
+	width: 100%;
+	background: rgba(0,0,0, 0.5);	
+	z-index:399;	
+	display: none;	
+	border:solid;
+}
+.ads-center {
+  position: fixed;
+  left:50%;
+  top:50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  /*width: 100%;  */
+  margin: auto;
+  /*align-items: center;*/
+  /*display: flex; 
+  justify-content: center;*/  
+  z-index: 600;  
 }
 
 .header {

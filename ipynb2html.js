@@ -60,7 +60,7 @@
 			line = line.replaceAll(/\n/g, "");
 						
 		}					
-		//		
+		
 		line = toStrong(line);		
 		return line;
 	}
@@ -71,7 +71,10 @@
 		ipynbJsonData.cells.forEach( (cell)=> {		
 			
 			if(cell.cell_type == "markdown") {			
-				if(cell.source[0].includes("How to use Colab?") ){return;} // skip
+				let source = cell.source[0];
+				if(source.includes("How to use Colab?") || source.includes("ฝากติดตาม")  ){
+					return; // skip
+				} 
 				
 				let content =" ";
 				cell.source.forEach( (line)=>{							
@@ -81,7 +84,11 @@
 				content = content.replaceAll(/\n{1,}/g, "<br>");				
 				allLines += `<div id='${cell.metadata.id}' class='describe-ipynb'>${content}</div>`;
 				
-			} else if (cell.cell_type =="code") {				
+			} else if (cell.cell_type =="code") {		
+				if( cell.source[0].includes("ฝากประชาสัมพันธ์") ){
+					return // skip
+				}		
+				
 				let content = cell.source.join("");				
 				allLines += `<textarea id="${cell.metadata.id}" class="notrun" rows=${cell.source.length}>${content}</textarea>`;
 				

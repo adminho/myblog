@@ -3,11 +3,12 @@
 	
 	let targetDiv = document.getElementById("main");
 	let statusLoading = document.getElementById("statusLoading");	
-	let bottomAds = document.getElementById("bottom-ads");
-	let rightAds = document.getElementById("right-ads"); 
+	let bottomAds = document.getElementById("bottom-ads");	
 	let headlineDiv = document.getElementById("headline");
 	let mainMenu = document.getElementById("main-menu");	
 	let closeBtn = document.getElementById("btn-menu-close");		
+	let adsBlurDiv = document.getElementById("ads-blur");
+	let adsTimeout = undefined;
 	
 	function isDesktop(){			
 		//if(  window.innerWidth >=768 || WURFL.form_factor === "Desktop" ) {			
@@ -27,11 +28,21 @@
 		closeBtn.style.display = "none";	
 	}
 	
+	function turnOnAds() {
+		if(adsTimeout) {
+			clearTimeout(adsTimeout);
+		}
+		adsTimeout=setTimeout(function (){
+			adsBlurDiv.style.display = "block";
+		}, 10000);
+	}
+	
 	function clickMenu(event) {	
-		isDesktop() ? showMenu() : closeMenu();		
 		event.preventDefault();	
+		isDesktop() ? showMenu() : closeMenu();				
 		let link = event.target				
-		includeHTML(link);				
+		includeHTML(link);	
+		turnOnAds();
 	}
 	
     function initMenuEvent(func){
@@ -84,6 +95,7 @@
 		}
 		
 	}	
+	
 	function includeHTML(link) {		    
 		if(!link){
 			throw new Error(`Not have a link`);
@@ -131,11 +143,12 @@
 		ctx.fillRect(0,13,30,5);
 		ctx.fillRect(0,21,30,5);
 	}
-
+	
 	async function renderPage(story, menu){		
 		await bildHTML(mainMenu, `left_menu_${story}.html`);			
-		await bildHTML(bottomAds, `ads_bottom_${story}.html`);	
-		await bildHTML(rightAds, `ads_right_${story}.html`);					
+		bildHTML(bottomAds, `ads_bottom_${story}.html`);	 
+		bildHTML(document.getElementById("right-ads"), `ads_right_${story}.html`);	
+		bildHTML(document.getElementById("ads-center"), `ads_right_${story}.html`);	
 		
 		switch(story) {
 			case "js":						
@@ -147,16 +160,21 @@
 			default:
 				throw new Error("Can't reder a page.");
 		}	
-		selectMenu(menu);		
 		
+		selectMenu(menu);		
 		drawListImgMenu();
 		
 		document.getElementById("btn-menu").onclick= showMenu;
 		document.getElementById("btn-menu-close").onclick = closeMenu;
-		
+		document.getElementById("ads-close").onclick = function (event) {
+			adsBlurDiv.style.display = "none";				
+		}
 		window.onresize = function(){				
 			isDesktop() ? showMenu() : closeMenu();	
-		}
+		}		
+		
+		turnOnAds();
+ 
 	}	
 
 	
