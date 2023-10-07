@@ -8,7 +8,7 @@
 	let mainMenu = document.getElementById("main-menu");	
 	let closeBtn = document.getElementById("btn-menu-close");		
 	let adsBlurDiv = document.getElementById("ads-blur");
-	let adsTimeout = undefined;
+	let __ADS_TIMEOUT__ = undefined;
 	
 	function isDesktop(){			
 		//if(  window.innerWidth >=768 || WURFL.form_factor === "Desktop" ) {			
@@ -29,10 +29,10 @@
 	}
 	
 	function turnOnAds() {
-		if(adsTimeout) {
-			clearTimeout(adsTimeout);
+		if(__ADS_TIMEOUT__) {
+			clearTimeout(__ADS_TIMEOUT__);
 		}
-		adsTimeout=setTimeout(function (){
+		__ADS_TIMEOUT__=setTimeout(function (){
 			adsBlurDiv.style.display = "block";
 		}, 10000);
 	}
@@ -52,22 +52,23 @@
 			link.addEventListener('contextmenu', function(event) {
 				event.preventDefault();			
 			});						
-			link.convertToHTML = func;	
-			link.content  = link.getAttribute('content');			
 			
-			if(!link.content.startsWith("http")){// for test only				
-				let url="";
-				if( link.content.endsWith(".md")){
-					url = window.location.href.includes("localhost")?"http://localhost/javascript/examples_book/":"https://raw.githubusercontent.com/adminho/javascript/master/examples_book/";
-				} else if ( link.content.endsWith(".ipynb")){
-					url = window.location.href.includes("localhost")?"http://localhost/machine-learning/ipynb/":"https://raw.githubusercontent.com/adminho/machine-learning/master/ipynb/";
-				}
-				link.content =  `${url}${link.content}`;	
-			}				
+			let url="";
+			link.content  = link.getAttribute('content');						
+			if (link.content.endsWith(".md")) {
+				link.convertToHTML = genHTMLfromMDFile;			
+				url = window.location.href.includes("localhost")?"http://localhost/javascript/examples_book/":"https://raw.githubusercontent.com/adminho/javascript/master/examples_book/";
+				
+			} else if (link.content.endsWith(".ipynb")) {			
+				link.convertToHTML = genHTMLfromIpynb;	
+				url = window.location.href.includes("localhost")?"http://localhost/machine-learning/ipynb/":"https://raw.githubusercontent.com/adminho/machine-learning/master/ipynb/";
+			}	
+			
+			link.content =  `${url}${link.content}`;							
 		}			
 	}
 	
-	async function bildHTML(div, html) {
+	async function buildHTML(div, html) {
 		let options =  {			
 			cache: "no-cache",				
 		};		
@@ -121,7 +122,7 @@
 			} else if (text.includes("Failed to open stream") || text.includes("Warning") ){
 				targetDiv.innerHTML = '<h1>Failed to Connect</h1>';
 			} else {								
-				targetDiv.innerHTML = link.convertToHTML(text);		
+				targetDiv.innerHTML = link.convertToHTML ? link.convertToHTML(text): text;		
 			}			
 		 }
 		)
@@ -145,22 +146,13 @@
 	}
 	
 	async function renderPage(story, menu){		
-		await bildHTML(mainMenu, `left_menu_${story}.html`);			
-		bildHTML(bottomAds, `ads_bottom_${story}.html`);	 
-		bildHTML(document.getElementById("right-ads"), `ads_right_${story}.html`);	
-		bildHTML(document.getElementById("ads-center"), `ads_right_${story}.html`);	
+		let path = "com";
+		await buildHTML(mainMenu, `${path}/left_menu_${story}.html`);			
+		buildHTML(bottomAds, `${path}/ads_bottom_${story}.html`);	 
+		buildHTML(document.getElementById("right-ads"), `${path}/ads_right_${story}.html`);	
+		buildHTML(document.getElementById("ads-center"), `${path}/ads_right_${story}.html`);	
 		
-		switch(story) {
-			case "js":						
-				initMenuEvent(genHTMLfromMDFile);
-				break;
-			case "ipynb":			
-				initMenuEvent(genHTMLfromIpynb);	
-				break;	
-			default:
-				throw new Error("Can't reder a page.");
-		}	
-		
+		initMenuEvent();		
 		selectMenu(menu);		
 		drawListImgMenu();
 		
@@ -173,8 +165,7 @@
 			isDesktop() ? showMenu() : closeMenu();	
 		}		
 		
-		turnOnAds();
- 
+		turnOnAds(); 
 	}	
 
 	

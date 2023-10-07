@@ -6,11 +6,17 @@ $no= isset($_GET['no']) ? $_GET['no'] : '';
 if( !empty($id) ){	
 	$story = "";
 	if($id === "756") {
-		$story = "js";
+		$story = "js_code";
 		$description ="เนื้อหาเกี่ยวกับ JavaScript ครบถ้วนอัดแน่น";				
+		
+	} else if($id === "128") {
+		$story = "js_html";
+		$description ="เนื้อหาเกี่ยวกับ JavaScript ครบถ้วนอัดแน่น";
+		
 	} else if($id === "982") {
 		$story = "ipynb";
 		$description ="เนื้อหาเกี่ยวกับ Python ครบถ้วนอัดแน่น";
+	
 	} else {
 		echo "Error 404";
 		exit();
