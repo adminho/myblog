@@ -45,15 +45,15 @@ if( !empty($id) ){
 		
 	<!--https://web.wurfl.io/#wurfl-js-->
 	<script type='text/javascript' src="//wurfl.io/wurfl.js"></script>
-	<link href="main.css?v=<?php echo $version;?>" rel="stylesheet" > 
-	<link href="md.css?v=<?php echo $version;?>" rel="stylesheet" >  
-	<link href="ipynb.css?v=<?php echo $version;?>" rel="stylesheet" >  
+	<link href="css/main.css?v=<?php echo $version;?>" rel="stylesheet" > 
+	<link href="css/md.css?v=<?php echo $version;?>" rel="stylesheet" >  
+	<link href="css/ipynb.css?v=<?php echo $version;?>" rel="stylesheet" >  
 </head>
 <body>		
 	<div class="header">
 		<span id="headline" class="headline"></span>
 	</div>
-	<div><img id="statusLoading" class='rotate' src='img/process.png'></div>    
+	<!-- <div id="statusLoading"><canvas id="process-canvas" class="rotate" width="400" height="400"></canvas></div> -->   	
 	<div id="main" class="main"></div>
 	<div id="right-ads" class="ads"></div>	
 	<div id="bottom-ads" class="sale" style="display:none"></div>	
@@ -69,11 +69,11 @@ if( !empty($id) ){
 	<div class="footer"><strong>แนะนำเปิดบนคอมพิวเตอร์ตั้งโต๊ะ หรือโน๊ตบุค </strong></div>
 	
 	
-	<script src="util.js?v=<?php echo $version;?>"></script>
-	<script src="runjscode.js?v=<?php echo $version;?>"></script>	
-	<script src="md2html.js?v=<?php echo $version;?>"></script>	
-	<script src="ipynb2html.js?v=<?php echo $version;?>"></script>	
-	<script src="initpage.js?v=<?php echo $version;?>"></script>			
+	<script src="lib/util.js?v=<?php echo $version;?>"></script>
+	<script src="lib/runjscode.js?v=<?php echo $version;?>"></script>	
+	<script src="lib/md2html.js?v=<?php echo $version;?>"></script>	
+	<script src="lib/ipynb2html.js?v=<?php echo $version;?>"></script>	
+	<script src="lib/initpage.js?v=<?php echo $version;?>"></script>			
 	<script>	
 	renderPage(<?php echo "'$story'";?>, <?php echo $no-1;?>);							
 	</script>
