@@ -10,24 +10,21 @@ function RightAds(props) {
 function BottomAds(props) {
 	return <div>
 	<strong>{props.describe}</strong><br/>
-	<iframe class="iframe_seller_link" width="430" height="220" src={props.src} frameborder="0"></iframe>
+	<iframe className="iframe_seller_link" width="430" height="220" src={props.src} frameBorder="0"></iframe>
 	</div>;	
 }
 
 
 function renderAds(story) {
-		 switch(story) {
+	switch(story) {
 			case "js_code":
 			case "js_html":
-				ReactDOM.render(<RightAds 
+				let jsxRightAdsHtml = <RightAds 
 					href="https://www.mebmarket.com/web/index.php?action=BookDetails&data=YToyOntzOjc6InVzZXJfaWQiO3M6NzoiMTcyNTQ4MyI7czo3OiJib29rX2lkIjtzOjY6IjE1Njg1NCI7fQ"
-					src="https://cdn-local.mebmarket.com/meb/server1/156854/Thumbnail/book_detail_large.gif"/>,  
-					document.getElementById("right-ads"));	
-					
-				ReactDOM.render(<RightAds 
-					href="https://www.mebmarket.com/web/index.php?action=BookDetails&data=YToyOntzOjc6InVzZXJfaWQiO3M6NzoiMTcyNTQ4MyI7czo3OiJib29rX2lkIjtzOjY6IjE1Njg1NCI7fQ"
-					src="https://cdn-local.mebmarket.com/meb/server1/156854/Thumbnail/book_detail_large.gif"/>,  
-					document.getElementById("ads-center"));					
+					src="https://cdn-local.mebmarket.com/meb/server1/156854/Thumbnail/book_detail_large.gif"/>;
+	
+				ReactDOM.render(jsxRightAdsHtml, document.getElementById("right-ads"));
+				ReactDOM.render(jsxRightAdsHtml, document.getElementById("ads-center"));	
 				
 				ReactDOM.render(<BottomAds 
 					describe="สามารถซื้อ ebook ฉบับเต็มได้ที่ลิงก์นี้"
@@ -37,21 +34,17 @@ function renderAds(story) {
 				break;
 				
 			case "ipynb":
-				ReactDOM.render(<div><RightAds 
+			    let jsxRightAds = <div>
+				    <RightAds 
+					href="https://www.mebmarket.com/web/index.php?action=BookDetails&data=YToyOntzOjc6InVzZXJfaWQiO3M6NzoiMTcyNTQ4MyI7czo3OiJib29rX2lkIjtzOjY6IjE5MjkyMiI7fQ"
+					src="https://cdn-local.mebmarket.com/meb/server1/192922/Thumbnail/book_detail_large.gif"/>
+					<RightAds 
 					href="https://www.mebmarket.com/web/index.php?action=BookDetails&data=YToyOntzOjc6InVzZXJfaWQiO3M6NzoiMTcyNTQ4MyI7czo3OiJib29rX2lkIjtzOjY6IjEwODI0NiI7fQ"
 					src="https://cdn-local.mebmarket.com/meb/server1/108246/Thumbnail/book_detail_large.gif"/>
-						<RightAds 
-					href="https://www.mebmarket.com/web/index.php?action=BookDetails&data=YToyOntzOjc6InVzZXJfaWQiO3M6NzoiMTcyNTQ4MyI7czo3OiJib29rX2lkIjtzOjY6IjE5MjkyMiI7fQ"
-					src="https://cdn-local.mebmarket.com/meb/server1/192922/Thumbnail/book_detail_large.gif"/></div>,  
-					document.getElementById("right-ads"));	
-					
-				ReactDOM.render(<div><RightAds 
-					href="https://www.mebmarket.com/web/index.php?action=BookDetails&data=YToyOntzOjc6InVzZXJfaWQiO3M6NzoiMTcyNTQ4MyI7czo3OiJib29rX2lkIjtzOjY6IjEwODI0NiI7fQ"
-					src="https://cdn-local.mebmarket.com/meb/server1/108246/Thumbnail/book_detail_large.gif"/>
-						<RightAds 
-					href="https://www.mebmarket.com/web/index.php?action=BookDetails&data=YToyOntzOjc6InVzZXJfaWQiO3M6NzoiMTcyNTQ4MyI7czo3OiJib29rX2lkIjtzOjY6IjE5MjkyMiI7fQ"
-					src="https://cdn-local.mebmarket.com/meb/server1/192922/Thumbnail/book_detail_large.gif"/></div>,  
-					document.getElementById("ads-center"));	
+						</div>;
+						
+				ReactDOM.render(jsxRightAds, document.getElementById("right-ads"));
+				ReactDOM.render(jsxRightAds, document.getElementById("ads-center"));	
 				
 				ReactDOM.render(<div><BottomAds 
 					describe="ถ้าสนใจ Python สามารถซื้อ ebook ที่ปูพื้นฐานตั้งแต่ติดลบ"
@@ -62,5 +55,5 @@ function renderAds(story) {
 					document.getElementById("bottom-ads"));						
 					
 				break;		  
-		 } // end switch
-		} // end function		
+	 } // end switch
+} // end function		

@@ -62,7 +62,6 @@ if( !empty($id) ){
 	<div class="header">
 		<span id="headline" class="headline"></span>
 	</div>
-	<!-- <div id="statusLoading"><canvas id="process-canvas" class="rotate" width="400" height="400"></canvas></div> -->   	
 	<div id="main" class="main"></div>
 	<div id="right-ads" class="ads"></div>	
 	<div id="bottom-ads" class="sale" style="display:none"></div>	
